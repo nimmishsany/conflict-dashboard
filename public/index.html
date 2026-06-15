@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Conflict Monitor</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Leaflet MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-left">
+      <div class="header-title">
+        <span class="live-dot"></span>
+        <h1>Global Conflict Monitor</h1>
+      </div>
+      <p class="header-subtitle">Real-time tracking of active kinetic conflicts &amp; wars worldwide</p>
+    </div>
+    <div class="header-right">
+      <span class="last-updated" id="last-updated">Loading…</span>
+      <button class="btn-briefing" id="btn-briefing" onclick="generateBriefing()">
+        &#9881; Generate Global Briefing
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Stats Bar ────────────────────────────────────────────────────────── -->
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-card">
+      <div class="stat-value" id="stat-total"><div class="skeleton-block" style="width:40px;height:32px"></div></div>
+      <div class="stat-label">Active Conflicts</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value critical" id="stat-critical"><div class="skeleton-block" style="width:30px;height:32px"></div></div>
+      <div class="stat-label">Critical Intensity</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value high" id="stat-high"><div class="skeleton-block" style="width:30px;height:32px"></div></div>
+      <div class="stat-label">High Intensity</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-regions"><div class="skeleton-block" style="width:30px;height:32px"></div></div>
+      <div class="stat-label">Regions Affected</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-africa"><div class="skeleton-block" style="width:30px;height:32px"></div></div>
+      <div class="stat-label">In Africa</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-middle-east"><div class="skeleton-block" style="width:30px;height:32px"></div></div>
+      <div class="stat-label">Middle East</div>
+    </div>
+  </div>
+
+  <!-- ── Main Layout ──────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Map + Detail Panel -->
+    <div class="map-section">
+      <div class="map-container">
+        <div class="map-legend">
+          <span class="legend-item"><span class="legend-dot critical"></span>Critical</span>
+          <span class="legend-item"><span class="legend-dot high"></span>High</span>
+          <span class="legend-item"><span class="legend-dot medium"></span>Medium</span>
+          <span class="legend-item"><span class="legend-dot low"></span>Low</span>
+        </div>
+        <div id="map"></div>
+      </div>
+
+      <!-- Conflict Detail Panel -->
+      <div class="detail-panel" id="detail-panel">
+        <div class="detail-empty" id="detail-empty">
+          <div class="detail-empty-icon">&#127759;</div>
+          <p>Click a conflict marker on the map<br>to view its details here.</p>
+        </div>
+        <div class="detail-content" id="detail-content" style="display:none">
+          <div class="detail-header">
+            <div>
+              <h2 id="detail-name"></h2>
+              <div class="detail-meta" id="detail-meta"></div>
+            </div>
+            <span class="detail-badge" id="detail-intensity-badge"></span>
+          </div>
+
+          <div class="detail-section">
+            <div class="detail-row">
+              <span class="detail-row-label">Region</span>
+              <span id="detail-region"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-row-label">Type</span>
+              <span id="detail-type"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-row-label">Started</span>
+              <span id="detail-started"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-row-label">Countries</span>
+              <span id="detail-countries"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-row-label">Casualties</span>
+              <span id="detail-casualties" class="detail-casualties"></span>
+            </div>
+          </div>
+
+          <p class="detail-description" id="detail-description"></p>
+
+          <div class="detail-tags" id="detail-tags"></div>
+
+          <div class="ai-box" id="detail-ai-box" style="display:none">
+            <div class="ai-label">&#129302; AI Situation Assessment</div>
+            <p id="detail-ai-text"></p>
+          </div>
+
+          <button class="btn-analyze" id="btn-analyze" onclick="analyzeConflict()">
+            &#129302; AI Situation Assessment
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conflict List -->
+    <div class="card">
+      <div class="card-header">
+        <h3>All Active Conflicts</h3>
+        <div class="filters">
+          <select id="filter-region" onchange="filterConflicts()">
+            <option value="">All Regions</option>
+            <option value="Africa">Africa</option>
+            <option value="Middle East">Middle East</option>
+            <option value="Europe">Europe</option>
+            <option value="Asia">Asia</option>
+            <option value="Americas">Americas</option>
+          </select>
+          <select id="filter-intensity" onchange="filterConflicts()">
+            <option value="">All Intensities</option>
+            <option value="critical">Critical</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+          <select id="filter-type" onchange="filterConflicts()">
+            <option value="">All Types</option>
+            <option value="interstate">Interstate</option>
+            <option value="civil">Civil War</option>
+            <option value="insurgency">Insurgency</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="non-state">Non-State</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table class="data-table" id="conflicts-table">
+          <thead>
+            <tr>
+              <th>Conflict</th>
+              <th>Region</th>
+              <th>Type</th>
+              <th>Intensity</th>
+              <th>Started</th>
+              <th>Casualties (est.)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="conflicts-tbody">
+            <tr><td colspan="7"><div class="skeleton-block" style="height:200px"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- News Section -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Conflict News Feed</h3>
+        <span class="source-tag">The Guardian</span>
+      </div>
+      <div class="news-feed" id="news-grid">
+        <div style="padding:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div class="skeleton-block" style="height:120px"></div>
+          <div class="skeleton-block" style="height:120px"></div>
+          <div class="skeleton-block" style="height:120px"></div>
+          <div class="skeleton-block" style="height:120px"></div>
+          <div class="skeleton-block" style="height:120px"></div>
+          <div class="skeleton-block" style="height:120px"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Global Briefing Modal ─────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeBriefing()"></div>
+  <div class="modal" id="modal-briefing">
+    <div class="modal-header">
+      <h3>&#127758; Global Conflict Briefing</h3>
+      <button class="modal-close" onclick="closeBriefing()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="spinner" id="briefing-spinner"></div>
+      <div class="ai-box" id="briefing-text" style="display:none"></div>
+      <p class="modal-timestamp" id="briefing-timestamp"></p>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet MarkerCluster JS -->
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>
