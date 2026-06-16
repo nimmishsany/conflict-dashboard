@@ -461,23 +461,28 @@ app.get('/api/stats', (req, res) => {
 app.post('/api/generate-briefing', async (req, res) => {
   const stats = computeStats(CONFLICTS);
   const conflictSummaries = CONFLICTS.map(c =>
-    `${c.name} (${c.region}, ${c.intensity} intensity): ${c.description.slice(0, 150)}...`
+    `${c.name} (${c.region}, ${c.intensity} intensity): ${c.description.slice(0, 120)}...`
+  ).join('\n');
+
+  // Pull latest news to ground the briefing in current events
+  const newsData = await fetchConflictNews().catch(() => ({ articles: [] }));
+  const newsDigest = newsData.articles.slice(0, 15).map((a, i) =>
+    `${i + 1}. [${a.region || 'Global'}] ${a.title}${a.summary ? ' — ' + a.summary.slice(0, 100) : ''}`
   ).join('\n');
 
   const prompt = `You are a senior geopolitical analyst at an international security think tank.
 Write a concise 300-word global conflict situation report for today (${new Date().toDateString()}).
 
-Active conflicts: ${stats.total}
-Critical intensity: ${stats.critical}
-Regions affected: ${stats.regionsAffected}
-
-Conflict summaries:
+ACTIVE CONFLICT TRACKER (${stats.total} conflicts, ${stats.critical} critical, ${stats.regionsAffected} regions):
 ${conflictSummaries}
 
-Provide:
-1. A one-paragraph global overview of the current conflict landscape
-2. The 3 most dangerous hotspots and why
-3. Key trends or escalation risks to watch
+LATEST NEWS REPORTS (use these to ground your analysis in current developments):
+${newsDigest}
+
+Based on the above live news and conflict data, provide:
+1. A one-paragraph global overview reflecting the most current developments
+2. The 3 most dangerous hotspots right now and why (cite specific news where relevant)
+3. Key trends or escalation risks emerging from today's reports
 4. A brief concluding assessment
 
 Use professional security analyst tone. No bullet lists — write in paragraphs.`;
@@ -486,7 +491,7 @@ Use professional security analyst tone. No bullet lists — write in paragraphs.
     const completion = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: prompt }],
-      max_tokens: 600,
+      max_tokens: 700,
       temperature: 0.4,
     });
     res.json({ briefing: completion.choices[0].message.content, generatedAt: new Date().toISOString() });
