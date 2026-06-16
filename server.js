@@ -313,6 +313,21 @@ const CONFLICTS = [
     status: 'active',
     tags: ['sahel', 'jihadist', 'coup', 'africa', 'isis', 'al-qaeda'],
     lastUpdated: '2026-06-01'
+  },
+  {
+    id: 'us-iran-conflict',
+    name: 'US–Iran Military Conflict',
+    region: 'Middle East',
+    countries: ['United States', 'Iran'],
+    type: 'interstate',
+    intensity: 'critical',
+    started: '2025-06-13',
+    lat: 27.0, lng: 54.0,
+    description: 'Direct military confrontation between the United States and Iran escalating from years of proxy conflict. US strikes targeted Iranian nuclear facilities and IRGC infrastructure; Iran retaliated with ballistic missile and drone attacks on US assets in the region. A framework peace deal brokered by Oman is under active negotiation as of June 2026, though both sides retain military posture.',
+    casualties: { estimate: 'Hundreds (military, both sides)', source: 'US DoD / Iranian state media / Reuters' },
+    status: 'active',
+    tags: ['nuclear', 'middle-east', 'persian-gulf', 'drones', 'ballistic-missiles', 'irgc', 'peace-talks', 'oman-mediation'],
+    lastUpdated: '2026-06-16'
   }
 ];
 
