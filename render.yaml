@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: conflict-dashboard
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GUARDIAN_API_KEY
+        sync: false
