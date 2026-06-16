@@ -23,11 +23,11 @@ const CONFLICTS = [
     intensity: 'critical',
     started: '2022-02-24',
     lat: 49.4, lng: 31.2,
-    description: 'Full-scale Russian invasion of Ukraine launched on 24 February 2022. The largest conventional war in Europe since World War II, involving intense fighting across eastern and southern Ukraine with massive artillery, drone, and missile exchanges.',
+    description: 'Full-scale Russian invasion of Ukraine launched on 24 February 2022. The largest conventional war in Europe since World War II. Russia continues striking civilian and cultural infrastructure — including the deliberate targeting of the UNESCO-listed Pechersk Lavra monastery in Kyiv in June 2026. G7 allies are pushing for a negotiated peace at their June 2026 summit in France, though no ceasefire has been agreed.',
     casualties: { estimate: '500,000+', source: 'UN/media estimates (military + civilian combined)' },
     status: 'active',
-    tags: ['nato', 'nuclear-risk', 'territorial', 'europe'],
-    lastUpdated: '2026-06-01'
+    tags: ['nato', 'nuclear-risk', 'territorial', 'europe', 'g7-peace-push'],
+    lastUpdated: '2026-06-16'
   },
   {
     id: 'gaza-israel',
@@ -38,11 +38,11 @@ const CONFLICTS = [
     intensity: 'critical',
     started: '2023-10-07',
     lat: 31.5, lng: 34.5,
-    description: 'Conflict sparked by Hamas attacks on Israel on 7 October 2023. Israeli military operations in Gaza have caused widespread destruction. The conflict expanded with Hezbollah exchanges in northern Israel and Lebanese border areas.',
+    description: 'Conflict sparked by Hamas attacks on Israel on 7 October 2023. Israeli military operations in Gaza have caused massive destruction with tens of thousands of civilian casualties. Concerns are mounting that thousands of bodies remain buried under rubble and may never be recovered. The broader regional picture has shifted following the signed US-Iran ceasefire deal, though Gaza operations continue independently of that agreement.',
     casualties: { estimate: '45,000+ (Gaza civilian)', source: 'Gaza Health Ministry / UN' },
     status: 'active',
-    tags: ['humanitarian', 'middle-east', 'occupation', 'blockade'],
-    lastUpdated: '2026-06-01'
+    tags: ['humanitarian', 'middle-east', 'occupation', 'blockade', 'rubble-crisis'],
+    lastUpdated: '2026-06-16'
   },
   {
     id: 'sudan-civil-war',
@@ -263,11 +263,11 @@ const CONFLICTS = [
     intensity: 'medium',
     started: '2024-09-17',
     lat: 33.8, lng: 35.9,
-    description: 'Major Israeli military campaign against Hezbollah in Lebanon (Sept–Nov 2024) led to ceasefire. Hezbollah severely degraded, Lebanese Army deploying to south. Fragile ceasefire holds with sporadic violations; political reconstruction ongoing.',
+    description: 'Major Israeli military campaign against Hezbollah in Lebanon (Sept–Nov 2024) led to a ceasefire. Hezbollah severely degraded. The June 2026 US-Iran peace deal has further reduced Iranian support for Hezbollah. However, Israel has declared it will not withdraw from Lebanese territory, drawing cautious reactions from the Lebanese public and government. Truce holds but the political situation remains unresolved.',
     casualties: { estimate: '4,000+ killed (2024 campaign)', source: 'Lebanese Health Ministry' },
     status: 'active',
-    tags: ['middle-east', 'hezbollah', 'israel', 'ceasefire', 'reconstruction'],
-    lastUpdated: '2026-06-01'
+    tags: ['middle-east', 'hezbollah', 'israel', 'ceasefire', 'reconstruction', 'no-withdrawal'],
+    lastUpdated: '2026-06-16'
   },
   {
     id: 'colombia-farc',
@@ -320,13 +320,13 @@ const CONFLICTS = [
     region: 'Middle East',
     countries: ['United States', 'Iran'],
     type: 'interstate',
-    intensity: 'critical',
+    intensity: 'medium',
     started: '2025-06-13',
     lat: 27.0, lng: 54.0,
-    description: 'Direct military confrontation between the United States and Iran escalating from years of proxy conflict. US strikes targeted Iranian nuclear facilities and IRGC infrastructure; Iran retaliated with ballistic missile and drone attacks on US assets in the region. A framework peace deal brokered by Oman is under active negotiation as of June 2026, though both sides retain military posture.',
+    description: 'Direct military confrontation between the US and Iran involving US strikes on Iranian nuclear facilities and IRGC infrastructure, met with Iranian ballistic missile and drone retaliation. A peace deal was signed in June 2026 — Trump declared it "all signed" and Iran agreed to never pursue nuclear weapons. Implementation details covering shipping lanes, sanctions relief, and deferred nuclear talks remain under negotiation. Iranian hardliners have expressed anger at the terms. JD Vance cautioned the deal is "very general" with many details still to be finalised.',
     casualties: { estimate: 'Hundreds (military, both sides)', source: 'US DoD / Iranian state media / Reuters' },
     status: 'active',
-    tags: ['nuclear', 'middle-east', 'persian-gulf', 'drones', 'ballistic-missiles', 'irgc', 'peace-talks', 'oman-mediation'],
+    tags: ['nuclear', 'middle-east', 'persian-gulf', 'ceasefire-signed', 'sanctions', 'irgc', 'deal-implementation'],
     lastUpdated: '2026-06-16'
   }
 ];
