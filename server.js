@@ -320,7 +320,7 @@ const CONFLICTS = [
     region: 'Middle East',
     countries: ['United States', 'Iran'],
     type: 'interstate',
-    intensity: 'medium',
+    intensity: 'critical',
     started: '2025-06-13',
     lat: 27.0, lng: 54.0,
     description: 'Direct military confrontation between the US and Iran involving US strikes on Iranian nuclear facilities and IRGC infrastructure, met with Iranian ballistic missile and drone retaliation. A peace deal was signed in June 2026 — Trump declared it "all signed" and Iran agreed to never pursue nuclear weapons. Implementation details covering shipping lanes, sanctions relief, and deferred nuclear talks remain under negotiation. Iranian hardliners have expressed anger at the terms. JD Vance cautioned the deal is "very general" with many details still to be finalised.',
