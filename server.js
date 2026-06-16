@@ -260,7 +260,7 @@ const CONFLICTS = [
     region: 'Middle East',
     countries: ['Lebanon', 'Israel', 'Hezbollah'],
     type: 'hybrid',
-    intensity: 'medium',
+    intensity: 'critical',
     started: '2024-09-17',
     lat: 33.8, lng: 35.9,
     description: 'Major Israeli military campaign against Hezbollah in Lebanon (Sept–Nov 2024) led to a ceasefire. Hezbollah severely degraded. The June 2026 US-Iran peace deal has further reduced Iranian support for Hezbollah. However, Israel has declared it will not withdraw from Lebanese territory, drawing cautious reactions from the Lebanese public and government. Truce holds but the political situation remains unresolved.',
